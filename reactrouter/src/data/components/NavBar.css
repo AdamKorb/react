@@ -1,0 +1,21 @@
+nav {
+    margin-top: 10px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.link {
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.activeLink {
+    color: #e50914;
+}
+
+
+.noneActiveLink {
+    color: #e5e5e5;
+}
