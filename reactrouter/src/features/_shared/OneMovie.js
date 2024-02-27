@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom" 
 import { Link } from "react-router-dom"
-import movies from "../data"
+import movies from "../_shared/data"
 import "./OneMovie.css"
 
 const OneMovie = () => {

@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Home from "./data/pages/Home"
-import Movies from "./data/pages/Movies"
-import Serials from "./data/pages/Serials"
-import Error from "./data/pages/Error"
-import SharedLayout from "./data/pages/SharedLayout"
-import OneMovie from "./data/components/OneMovie"
+import Home from "./features/home/Home";
+import Movies from "./features/movies/Movies";
+import Serials from "./features/serials/Serials";
+import Error from "./features/_shared/Error"
+import SharedLayout from "./features/_layout/SharedLayout"
+import OneMovie from "./features/_shared/OneMovie"
 
 const App = () => {
   return (

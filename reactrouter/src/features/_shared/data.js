@@ -1,13 +1,13 @@
-import image1 from "./images/movie1.png"
-import image2 from "./images/movie2.png"
-import image3 from "./images/movie3.png"
-import image4 from "./images/movie4.png"
-import image5 from "./images/movie5.png"
-import image6 from "./images/movie6.png"
-import image7 from "./images/movie7.png"
-import image8 from "./images/movie8.png"
-import image9 from "./images/movie9.png"
-import image10 from "./images/movie10.png"
+import image1 from "../_images/movie1.png"
+import image2 from "../_images/movie2.png"
+import image3 from "../_images/movie3.png"
+import image4 from "../_images/movie4.png"
+import image5 from "../_images/movie5.png"
+import image6 from "../_images/movie6.png"
+import image7 from "../_images/movie7.png"
+import image8 from "../_images/movie8.png"
+import image9 from "../_images/movie9.png"
+import image10 from "../_images/movie10.png"
 
 
 const allMovies = [
