@@ -1,0 +1,15 @@
+.one-function {
+    border-bottom: 2px solid grey;
+}
+
+.search-bar {
+    text-align: center;
+}
+
+.call-button {
+    font-size: 20px;
+    padding:  15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
