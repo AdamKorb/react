@@ -15,7 +15,6 @@ const HomePage: React.FC = () => {
     });
     setFilteredData(dataAfterFilter);
   }, [searchingText]);
-  window.location.reload()
 
   
 
