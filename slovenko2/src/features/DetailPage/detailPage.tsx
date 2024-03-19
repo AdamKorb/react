@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom" 
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage,IonToolbar,IonTitle } from '@ionic/react';
 import { RouteComponentProps } from 'react-router-dom';
+import data from '../_shared/data';
+
 
 interface DetailPageProps extends RouteComponentProps<{
   id: string;
@@ -11,15 +12,13 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Detail položky</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <h2>Názov položky</h2>
-      </IonContent>
-    </IonPage>
+    <IonHeader>
+        
+        </IonHeader>
+    <IonContent>
+      <h2>Názov položky</h2>
+    </IonContent>
+  </IonPage>
   );
 };
 

@@ -1,6 +1,6 @@
 import './homePage.css';
 import data from '../_shared/data';
-import detailPage from '../DetailPage/detailPage';
+import Header from '../_shared/header';
 import { useState, useEffect } from 'react';
 import { IonSearchbar, IonButton, IonLabel, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <IonPage>
+      <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Slovensko 2.0</IonTitle>
@@ -56,12 +56,12 @@ const HomePage: React.FC = () => {
             <IonTitle size="large">Slovensko2.0</IonTitle>
           </IonToolbar>
         </IonHeader>
-      <form className='search-bar'>
-      <IonSearchbar
+        <form className='search-bar'>
+        <IonSearchbar
           onIonInput={(e) => setSearchingText(e.detail.value!)}
           placeholder='Čo za teba vybavíme?'
         />
-      </form>
+        </form>
       <div key={searchingText}>
         {filteredData.map((oneFunction) => {
           const { id, title, tags, price, tax } = oneFunction;
