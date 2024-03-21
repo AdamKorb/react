@@ -1,6 +1,5 @@
 import './homePage.css';
 import data from '../_shared/data';
-import Header from '../_shared/header';
 import { useState, useEffect } from 'react';
 import { IonSearchbar, IonButton, IonLabel, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
@@ -28,12 +27,10 @@ const HomePage: React.FC = () => {
   if (filteredData.length === 0) {
     return (
       <div>
-        <form className='search-bar'>
         <IonSearchbar
             onIonInput={(e) => setSearchingText(e.detail.value!)}
             placeholder='Čo za teba vybavíme?'
           />
-        </form>
         <h2>{searchingText}</h2>
         <p>Budeme pridávať daľšie služby, pokiaľ máte o takúto službu záujem, rádi by sme sa vás spýtali na viac informací.</p>
         <p>Môžeme vás kontaktovať?</p>
@@ -44,18 +41,13 @@ const HomePage: React.FC = () => {
   }
 
   return (
-      <IonPage>
+    <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Slovensko 2.0</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Slovensko2.0</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <form className='search-bar'>
         <IonSearchbar
           onIonInput={(e) => setSearchingText(e.detail.value!)}
@@ -75,10 +67,10 @@ const HomePage: React.FC = () => {
               <p>{tax}</p>
               </IonLabel>
             </IonButton>
-          );
-        })}
-      </div>
-      </IonContent>
+            );
+          })}
+          </div>
+        </IonContent>
     </IonPage>
   );
 };

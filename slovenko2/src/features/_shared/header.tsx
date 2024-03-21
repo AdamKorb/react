@@ -3,11 +3,6 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonPage } from '@ionic/rea
 const header = () => {
   return (
 <IonPage>
-    <IonHeader>
-        <IonToolbar>
-          <IonTitle>Slovensko 2.0</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
