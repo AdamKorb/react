@@ -1,18 +1,24 @@
-import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle,IonButton } from '@ionic/react';
-import { RouteComponentProps, Link } from 'react-router-dom';
-import data from '../_shared/data';
-import Formular from '../_shared/formular';
+import { RouteComponentProps, Link } from "react-router-dom";
+import data from "../_shared/data";
+import Formular from "../Formular/formular";
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonTitle,
+  IonButton,
+} from "@ionic/react";
 
-
-interface DetailPageProps extends RouteComponentProps<{
-  id: string;
-}> {}
+interface DetailPageProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
 
 const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
   const itemId = parseInt(match.params.id);
-  const filteredItem = data.filter(item => item.id === itemId)[0];
+  const filteredItem = data.filter((item) => item.id === itemId)[0];
 
-  
   return (
     <IonPage>
       <IonHeader>
@@ -31,8 +37,8 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
             </li>
           </ul>
         )}
-          <Link to="/formular">
-            <IonButton  expand="block">Formulár</IonButton>
+        <Link to="/formular">
+          <IonButton expand="block">Formulár</IonButton>
         </Link>
       </IonContent>
     </IonPage>
