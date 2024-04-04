@@ -30,6 +30,7 @@ const App: React.FC = () => (
   <IonApp>
     <Router>
       <IonReactRouter>
+        <Route path="/" component={HomePage}/>
         <Route exact path="/home" component={HomePage} />
         <Route path="/detailPage/:id" component={DetailPage} />
         <Route path="/formular" component={Formular} />

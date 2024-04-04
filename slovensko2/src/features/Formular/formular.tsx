@@ -7,12 +7,12 @@ import {
   IonButton,
   IonFooter,
   IonInput,
+  IonCol,
 } from "@ionic/react";
 import {
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
 } from "@ionic/react";
 
@@ -30,15 +30,14 @@ const formular = () => {
             <IonCardTitle>Názov firmy</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <p>
-              Zadajte názov vašej firmy a skontrolujte si, či názov už
-              neexistuje
-            </p>
+            Zadajte názov vašej firmy a skontrolujte si, či názov už neexistuje
             <IonInput placeholder="Zadajte názov firmy" />
           </IonCardContent>
-          <IonToolbar color="primary">
-            <h5>Zadajte...</h5>
-          </IonToolbar>
+          <IonFooter>
+            <IonToolbar color="primary">
+              <IonCol>Zadajte...</IonCol>
+            </IonToolbar>
+          </IonFooter>
         </IonCard>
 
         <IonCard>
@@ -46,12 +45,14 @@ const formular = () => {
             <IonCardTitle>Kontaktný údaj</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <p>Zadajte email, cez ktorý sa opätovne prihlásite</p>
+            Zadajte email, cez ktorý sa opätovne prihlásite
             <IonInput placeholder="Zadajte Email"></IonInput>
           </IonCardContent>
-          <IonToolbar color="secondary">
-            <h5>Zadajte...</h5>
-          </IonToolbar>
+          <IonFooter>
+            <IonToolbar color="secondary">
+              <IonCol>Zadajte...</IonCol>
+            </IonToolbar>
+          </IonFooter>
         </IonCard>
 
         <IonCard>
@@ -59,12 +60,14 @@ const formular = () => {
             <IonCardTitle>Kontaktný údaj</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <p>Zadajte svoje tel. číslo, pre poslanie overovacieho kódu</p>
+            Zadajte svoje tel. číslo, pre poslanie overovacieho kódu
             <IonInput placeholder="Tel.číslo"></IonInput>
           </IonCardContent>
-          <IonToolbar color="tertiary">
-            <h5>Zadajte...</h5>
-          </IonToolbar>
+          <IonFooter>
+            <IonToolbar color="tertiary">
+              <IonCol>Zadajte...</IonCol>
+            </IonToolbar>
+          </IonFooter>
         </IonCard>
 
         <IonCard>
@@ -72,12 +75,14 @@ const formular = () => {
             <IonCardTitle>Meno konateľa</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <p>Zadajte celé meno, konateľa vašej spoločnosti</p>
+            Zadajte celé meno, konateľa vašej spoločnosti
             <IonInput placeholder="Meno"></IonInput>
           </IonCardContent>
-          <IonToolbar color="success">
-            <h5>Zadajte...</h5>
-          </IonToolbar>
+          <IonFooter>
+            <IonToolbar color="success">
+              <IonCol>Zadajte...</IonCol>
+            </IonToolbar>
+          </IonFooter>
         </IonCard>
 
         <IonCard>
@@ -85,14 +90,17 @@ const formular = () => {
             <IonCardTitle>Predmety podnikania</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <p>Zadajte oblasti podnikania vašej spoločnosti</p>
+            Zadajte oblasti podnikania vašej spoločnosti
             <IonInput placeholder="Kľúčové slová"></IonInput>
           </IonCardContent>
-          <IonToolbar color="warning">
-            <h5>Zadajte...</h5>
-          </IonToolbar>
+          <IonFooter>
+            <IonToolbar color="warning">
+              <IonCol>Zadajte...</IonCol>
+            </IonToolbar>
+          </IonFooter>
         </IonCard>
       </IonContent>
+
       <IonFooter>
         <IonButton expand="block">Odoslať</IonButton>
       </IonFooter>

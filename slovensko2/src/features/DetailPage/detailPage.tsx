@@ -1,6 +1,5 @@
 import { RouteComponentProps, Link } from "react-router-dom";
 import data from "../_shared/data";
-import Formular from "../Formular/formular";
 import {
   IonContent,
   IonHeader,
