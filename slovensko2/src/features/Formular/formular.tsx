@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import axios from 'axios';
 import {
   IonContent,
   IonHeader,
@@ -20,6 +22,54 @@ import {
 import { chatbubbleOutline } from "ionicons/icons";
 
 const formular = () => {
+  const [companyName, setCompanyName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [owner, setOwner] = useState('');
+  const [bussinessActivity, setBussinessActivity] = useState('');
+
+  const handleInputChange = (e: CustomEvent) => {
+    const inputElement = e.target as HTMLInputElement;
+    if (inputElement !== null) {
+      const { name, value } = inputElement;
+      switch (name) {
+        case "companyName":
+          setCompanyName(value);
+          break;
+        case "email":
+          setEmail(value);
+          break;
+        case "phoneNumber":
+          setPhoneNumber(value);
+          break;
+        case "owner":
+          setOwner(value);
+          break;
+        case "bussinessActivity":
+          setBussinessActivity(value);
+          break;
+        default:
+          break;
+      }
+    }
+  };
+  const handleSubmit = () => {
+    const data = {
+      companyName: companyName,
+      email: email,
+      phoneNumber: phoneNumber,
+      owner: owner,
+    };
+    const apiUrl = 'my_api';
+
+    axios.post(apiUrl, data)
+      .then(response => {
+        console.log('Údaje úspešne odoslané na API:', response.data);
+      })
+      .catch(error => {
+        console.error('Chyba pri odosielaní údajov na API:', error);
+      });
+    };
   return (
     <IonPage>
       <IonHeader>
@@ -43,7 +93,7 @@ const formular = () => {
           </IonCardHeader>
           <IonCardContent>
             Zadajte názov vašej firmy a skontrolujte si, či názov už neexistuje
-            <IonInput placeholder="Zadajte názov firmy" />
+            <IonInput placeholder="Zadajte názov firmy" value={companyName} onIonChange={handleInputChange}/>
           </IonCardContent>
           <IonFooter>
             <IonToolbar style={{ '--background': '#fec89a' }}>
@@ -64,7 +114,7 @@ const formular = () => {
           </IonCardHeader>
           <IonCardContent>
             Zadajte email, cez ktorý sa opätovne prihlásite
-            <IonInput placeholder="Zadajte Email"></IonInput>
+            <IonInput type="email" placeholder="Zadajte Email" value={email} onIonChange={handleInputChange}></IonInput>
           </IonCardContent>
           <IonFooter>
             <IonToolbar style={{ '--background': '#fec89a' }}>
@@ -85,7 +135,7 @@ const formular = () => {
           </IonCardHeader>
           <IonCardContent>
             Zadajte svoje tel. číslo, pre poslanie overovacieho kódu
-            <IonInput placeholder="Tel.číslo"></IonInput>
+            <IonInput type="tel" placeholder="Tel.číslo" value={phoneNumber} onIonChange={handleInputChange}></IonInput>
           </IonCardContent>
           <IonFooter>
             <IonToolbar style={{ '--background': '#fec89a' }}>
@@ -106,7 +156,7 @@ const formular = () => {
           </IonCardHeader>
           <IonCardContent>
             Zadajte celé meno, konateľa vašej spoločnosti
-            <IonInput placeholder="Meno"></IonInput>
+            <IonInput placeholder="Meno"value={owner} onIonChange={handleInputChange}></IonInput>
           </IonCardContent>
           <IonFooter>
             <IonToolbar style={{ '--background': '#fec89a' }}>
@@ -127,7 +177,7 @@ const formular = () => {
           </IonCardHeader>
           <IonCardContent>
             Zadajte oblasti podnikania vašej spoločnosti
-            <IonInput placeholder="Kľúčové slová"></IonInput>
+            <IonInput placeholder="Kľúčové slová" value={bussinessActivity} onIonChange={handleInputChange}></IonInput>
           </IonCardContent>
           <IonFooter>
             <IonToolbar style={{ '--background': '#fec89a' }}>
@@ -138,7 +188,7 @@ const formular = () => {
       </IonContent>
 
       <IonFooter>
-        <IonButton expand="block">Odoslať</IonButton>
+        <IonButton onClick={handleSubmit} expand="block">Odoslať</IonButton>
       </IonFooter>
     </IonPage>
   );
