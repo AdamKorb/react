@@ -17,7 +17,8 @@ import {
   IonBackButton,
   IonButtons,
   IonIcon,
-  IonAlert,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react";
 import { chatbubbleOutline } from "ionicons/icons";
 
@@ -176,8 +177,15 @@ const formular = () => {
             </IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            Zadajte oblasti podnikania vašej spoločnosti
-            <IonInput placeholder="Kľúčové slová" value={bussinessActivity} onIonChange={handleInputChange}></IonInput>
+            Zvolte oblasti podnikania vašej spoločnosti
+            <IonSelect placeholder="Vyberte" value={bussinessActivity} onIonChange={handleInputChange} name="bussinessActivity" multiple={true}>
+              <IonSelectOption value="option1">40.Počítačové služby</IonSelectOption>
+              <IonSelectOption value="option2">27.Sprostretkovateľská činnosť</IonSelectOption>
+              <IonSelectOption value="option3">28.Kúpa tovaru na účely predaja</IonSelectOption>
+              <IonSelectOption value="option4">58.Prenájom, úschova a požičanie</IonSelectOption>
+              <IonSelectOption value="option5">62.Mimoškolská vzdelávacia činnosť</IonSelectOption>
+              <IonSelectOption value="option6">41.Služby v oblasti administratívnej správy</IonSelectOption>
+            </IonSelect>
           </IonCardContent>
           <IonFooter>
             <IonToolbar style={{ '--background': '#fec89a' }}>
