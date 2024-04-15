@@ -1,76 +1,79 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 import {
-  IonContent,
-  IonHeader,
   IonPage,
+  IonHeader,
   IonToolbar,
   IonTitle,
-  IonButton,
-  IonFooter,
-  IonInput,
-  IonCol,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonBackButton,
   IonButtons,
-  IonIcon,
-  IonSelect,
-  IonSelectOption,
+  IonBackButton,
+  IonContent,
+  IonFooter,
+  IonButton,
 } from "@ionic/react";
-import { chatbubbleOutline } from "ionicons/icons";
+import FormularCard from "../_shared/formularCard";
 
-const formular = () => {
-  const [companyName, setCompanyName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [owner, setOwner] = useState('');
-  const [bussinessActivity, setBussinessActivity] = useState('');
+const Formular = () => {
+  const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [owner, setOwner] = useState("");
+  const [bussinessActivity, setBussinessActivity] = useState<string[]>([]);
+  const [jsonData, setJsonData] = useState<any>(null);
 
-  const handleInputChange = (e: CustomEvent) => {
-    const inputElement = e.target as HTMLInputElement;
-    if (inputElement !== null) {
-      const { name, value } = inputElement;
-      switch (name) {
-        case "companyName":
-          setCompanyName(value);
-          break;
-        case "email":
-          setEmail(value);
-          break;
-        case "phoneNumber":
-          setPhoneNumber(value);
-          break;
-        case "owner":
-          setOwner(value);
-          break;
-        case "bussinessActivity":
-          setBussinessActivity(value);
-          break;
-        default:
-          break;
-      }
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "companyName":
+        setCompanyName(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "phoneNumber":
+        setPhoneNumber(value);
+        break;
+      case "owner":
+        setOwner(value);
+        break;
+      default:
+        break;
     }
   };
+
   const handleSubmit = () => {
     const data = {
       companyName: companyName,
       email: email,
       phoneNumber: phoneNumber,
       owner: owner,
+      bussinessActivity: bussinessActivity,
     };
-    const apiUrl = 'my_api';
+    const apiUrl = "http://localhost:3000/_api/server";
 
-    axios.post(apiUrl, data)
-      .then(response => {
-        console.log('Údaje úspešne odoslané na API:', response.data);
+    axios
+      .post(apiUrl, data)
+      .then((response) => {
+        console.log("Údaje úspešne odoslané:", response.data);
+        fetchJsonData();
       })
-      .catch(error => {
-        console.error('Chyba pri odosielaní údajov na API:', error);
+      .catch((error) => {
+        console.error("Chyba pri odosielaní údajov:", error);
       });
-    };
+  };
+
+  const fetchJsonData = () => {
+    axios
+      .get("/api/getData")
+      .then((response) => {
+        console.log("Obsah súboru steps.json:", response.data);
+        setJsonData(response.data);
+      })
+      .catch((error) => {
+        console.error("Chyba pri načítaní obsahu súboru steps.json:", error);
+      });
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -82,124 +85,76 @@ const formular = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle style={{ display: "flex", alignItems: "center" }}>
-              Názov firmy
-              <IonIcon
-                icon={chatbubbleOutline}
-                style={{ color: "dodgerblue", marginLeft: "150px" }}
-              />
-            </IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            Zadajte názov vašej firmy a skontrolujte si, či názov už neexistuje
-            <IonInput placeholder="Zadajte názov firmy" value={companyName} onIonChange={handleInputChange}/>
-          </IonCardContent>
-          <IonFooter>
-            <IonToolbar style={{ '--background': '#fec89a' }}>
-              <IonCol style={{fontSize: "15px", color:'#bc6c25'}}>Vyplnte...</IonCol>
-            </IonToolbar>
-          </IonFooter>
-        </IonCard>
+        <FormularCard
+          title="Názov firmy"
+          description="Zadajte názov vašej firmy a skontrolujte si, či názov už neexistuje"
+          icon="chatbubbleOutline"
+          placeholder="Zadajte názov firmy"
+          value={companyName}
+          handleInputChange={handleInputChange}
+          success= {false}
+        />
 
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle style={{ display: "flex", alignItems: "center" }}>
-              Kontaktný údaj
-              <IonIcon
-                icon={chatbubbleOutline}
-                style={{ color: "dodgerblue", marginLeft: "110px" }}
-              />
-            </IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            Zadajte email, cez ktorý sa opätovne prihlásite
-            <IonInput type="email" placeholder="Zadajte Email" value={email} onIonChange={handleInputChange}></IonInput>
-          </IonCardContent>
-          <IonFooter>
-            <IonToolbar style={{ '--background': '#fec89a' }}>
-              <IonCol style={{fontSize: "15px", color:'#bc6c25'}}>Vyplnte...</IonCol>
-            </IonToolbar>
-          </IonFooter>
-        </IonCard>
+        <FormularCard
+          title="Kontaktný údaj"
+          description="Zadajte email, cez ktorý sa opätovne prihlásite"
+          icon="chatbubbleOutline"
+          placeholder="Zadajte Email"
+          value={email}
+          handleInputChange={handleInputChange}
+          success= {false}
+        />
 
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle style={{ display: "flex", alignItems: "center" }}>
-              Kontaktný údaj
-              <IonIcon
-                icon={chatbubbleOutline}
-                style={{ color: "dodgerblue", marginLeft: "110px" }}
-              />
-            </IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            Zadajte svoje tel. číslo, pre poslanie overovacieho kódu
-            <IonInput type="tel" placeholder="Tel.číslo" value={phoneNumber} onIonChange={handleInputChange}></IonInput>
-          </IonCardContent>
-          <IonFooter>
-            <IonToolbar style={{ '--background': '#fec89a' }}>
-              <IonCol style={{fontSize: "15px", color:'#bc6c25'}}>Vyplnte...</IonCol>
-            </IonToolbar>
-          </IonFooter>
-        </IonCard>
+        <FormularCard
+          title="Kontaktný údaj"
+          description="Zadajte svoje tel. číslo, pre poslanie overovacieho kódu"
+          icon="chatbubbleOutline"
+          placeholder="Tel.číslo"
+          value={phoneNumber}
+          handleInputChange={handleInputChange}
+          success= {false}
+        />
 
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle style={{ display: "flex", alignItems: "center" }}>
-              Meno konateľa
-              <IonIcon
-                icon={chatbubbleOutline}
-                style={{ color: "dodgerblue", marginLeft: "110px" }}
-              />
-            </IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            Zadajte celé meno, konateľa vašej spoločnosti
-            <IonInput placeholder="Meno"value={owner} onIonChange={handleInputChange}></IonInput>
-          </IonCardContent>
-          <IonFooter>
-            <IonToolbar style={{ '--background': '#fec89a' }}>
-              <IonCol style={{fontSize: "15px", color:'#bc6c25'}}>Vyplnte...</IonCol>
-            </IonToolbar>
-          </IonFooter>
-        </IonCard>
+        <FormularCard
+          title="Meno konateľa"
+          description="Zadajte celé meno, konateľa vašej spoločnosti"
+          icon="chatbubbleOutline"
+          placeholder="Meno"
+          value={owner}
+          handleInputChange={handleInputChange}
+          success= {false}
+        />
 
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle style={{ display: "flex", alignItems: "center" }}>
-              Predmety podnikania
-              <IonIcon
-                icon={chatbubbleOutline}
-                style={{ color: "dodgerblue", marginLeft: "25px" }}
-              />
-            </IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            Zvolte oblasti podnikania vašej spoločnosti
-            <IonSelect placeholder="Vyberte" value={bussinessActivity} onIonChange={handleInputChange} name="bussinessActivity" multiple={true}>
-              <IonSelectOption value="option1">40.Počítačové služby</IonSelectOption>
-              <IonSelectOption value="option2">27.Sprostretkovateľská činnosť</IonSelectOption>
-              <IonSelectOption value="option3">28.Kúpa tovaru na účely predaja</IonSelectOption>
-              <IonSelectOption value="option4">58.Prenájom, úschova a požičanie</IonSelectOption>
-              <IonSelectOption value="option5">62.Mimoškolská vzdelávacia činnosť</IonSelectOption>
-              <IonSelectOption value="option6">41.Služby v oblasti administratívnej správy</IonSelectOption>
-            </IonSelect>
-          </IonCardContent>
-          <IonFooter>
-            <IonToolbar style={{ '--background': '#fec89a' }}>
-              <IonCol style={{fontSize: "15px", color:'#bc6c25'}}>Vyplnte...</IonCol>
-            </IonToolbar>
-          </IonFooter>
-        </IonCard>
+        <FormularCard
+          title="Predmety podnikania"
+          description="Zvolte oblasti podnikania vašej spoločnosti"
+          icon="chatbubbleOutline"
+          inputType="select"
+          placeholder="Vyberte"
+          value={bussinessActivity}
+          handleInputChange={(e) => setBussinessActivity(e.detail.value)}
+          multiple={true}
+          success= {false}
+          selectOptions={[
+            { value: "option1", text: "40.Počítačové služby" },
+            { value: "option2", text: "27.Sprostretkovateľská činnosť" },
+            { value: "option3", text: "28.Kúpa tovaru na účely predaja" },
+            { value: "option4", text: "58.Prenájom, úschova a požičanie" },
+            { value: "option5", text: "62.Mimoškolská vzdelávacia činnosť" },
+            { value: "option6",  text: "41.Služby v oblasti administratívnej správy",},
+          ]}
+        />
       </IonContent>
 
       <IonFooter>
-        <IonButton onClick={handleSubmit} expand="block">Odoslať</IonButton>
+        <IonToolbar>
+          <IonButton onClick={handleSubmit} expand="block">
+            Odoslať
+          </IonButton>
+        </IonToolbar>
       </IonFooter>
     </IonPage>
   );
 };
 
-export default formular;
+export default Formular;
