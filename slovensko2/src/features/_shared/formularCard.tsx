@@ -18,13 +18,12 @@ interface FormularCardProps {
   title: string;
   description: string;
   icon: string;
-  placeholder: string;
+  placeholder?: string;
   value: string | string[];
   handleInputChange?: (e: any) => void;
   inputType?: "text" | "email" | "password" | "number" | "tel" | "select";
   selectOptions?: { value: string; text: string }[];
   success: boolean;
-  multiple?: boolean;
 }
 
 const FormularCard: React.FC<FormularCardProps> = ({
@@ -38,8 +37,8 @@ const FormularCard: React.FC<FormularCardProps> = ({
   selectOptions,
   success: initialSuccess,
 }) => {
-  const [value, setValue] = useState(initialValue);
-  const [success, setSuccess] = useState(initialSuccess);
+  const [value, setValue] = useState(initialValue ?? '');
+  const [success, setSuccess] = useState(initialSuccess ?? false); 
 
   const handleChange = (e: any) => {
     if (!success) {

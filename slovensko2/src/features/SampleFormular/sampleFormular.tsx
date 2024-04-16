@@ -1,4 +1,5 @@
 import FormularCard from "../_shared/formularCard";
+import FormularCardWInput from "../_shared/formularCardWInput";
 import {
   IonContent,
   IonHeader,
@@ -65,7 +66,6 @@ const sampleFormular = () => {
           inputType="select"
           placeholder="Vyberte"
           value={defaultBussinessActivity}
-          multiple={true}
           success={true}
           selectOptions={[
             { value: "option1", text: "40.Počítačové služby" },
@@ -78,6 +78,20 @@ const sampleFormular = () => {
               text: "41.Služby v oblasti administratívnej správy",
             },
           ]}
+        />
+         <FormularCard
+          title="Kontaktný údaj"
+          description="Zadajte svoje tel. číslo, pre poslanie overovacieho kódu"
+          icon="chatbubbleOutline"
+          placeholder="Tel.číslo"
+          value="0900400500"
+          success={true}
+        />
+
+          <FormularCardWInput
+           title="Budeme vás kontaktovať"
+           description="V momente keď budeme mať pre vás potrebné informácie sa s vami spojíme"
+           icon="chatbubbleOutline"
         />
       </IonContent>
     </IonPage>

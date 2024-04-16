@@ -1,13 +1,12 @@
 import "./homePage.css";
-import data from "../_shared/data";
 import { removeDiacritics } from "../_shared/removeDiacritics";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { chevronForwardOutline } from "ionicons/icons";
+import axios from "axios";
 import {
   IonSearchbar,
   IonButton,
-  IonLabel,
   IonContent,
   IonHeader,
   IonPage,
@@ -25,17 +24,29 @@ import {
 
 const HomePage: React.FC = () => {
   const [searchingText, setSearchingText] = useState("");
-  const [filteredData, setFilteredData] = useState<
-    { id: number; title: string; tags: string; price: string; tax: string }[]
-  >([]);
+  const [data, setData] = useState<any[]>([]);
+  const [filteredData, setFilteredData] = useState<any[]>([]);
   const history = useHistory();
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8100/mock/data.json");
+      setData(response.data);
+    } catch (error) {
+      console.error("Chyba pri načítaní dát:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const goToDetailPage = (itemId: number) => {
     history.push(`/detailPage/${itemId}`);
   };
 
   useEffect(() => {
-    const dataAfterFilter = data.filter((oneFunction) => {
+    const dataAfterFilter = data.filter((oneFunction: any) => {
       const normalizedSearchingText = removeDiacritics(
         searchingText.toLowerCase()
       );
@@ -48,80 +59,10 @@ const HomePage: React.FC = () => {
       );
     });
     setFilteredData(dataAfterFilter);
-  }, [searchingText]);
+  }, [searchingText, data]);
+
   const handleSearchInput = (e: CustomEvent) => {
     setSearchingText(e.detail.value!);
-  };
-
-  const renderFilteredData = () => {
-    if (filteredData.length === 0) {
-      return (
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle>{searchingText}</IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            Budeme pridávať daľšie služby, pokiaľ máte o takúto službu záujem,
-            rádi by sme sa vás spýtali na viac informací.
-          </IonCardContent>
-          <IonCardContent>Môžeme vás kontaktovať?</IonCardContent>
-          <IonButton className="call-button">Áno</IonButton>
-          <IonButton className="call-button">Nie</IonButton>
-        </IonCard>
-      );
-    } else {
-      return (
-        <div key={searchingText}>
-          {filteredData.map((oneFunction) => {
-            const { id, title, tags, price, tax } = oneFunction;
-
-            return (
-              <IonButton
-                fill="clear"
-                expand="block"
-                key={id}
-                className="ion-text-wrap border"
-                onClick={() => goToDetailPage(id)}
-              >
-                <IonGrid>
-                  <IonRow class="ion-justify-content-between">
-                    <IonCol
-                      className="ion-text-left ion-no-padding"
-                      style={{
-                        fontSize: "22px",
-                        color: "black",
-                        maxWidth: "225px",
-                      }}
-                      size="auto"
-                    >
-                      {title}
-                      <br />
-                    </IonCol>
-                    <IonCol
-                      className="ion-text-right ion-no-padding"
-                      style={{ fontSize: "15px" }}
-                    >
-                      {price}
-                      <br />
-                      {tax}
-                    </IonCol>
-                  </IonRow>
-                  <IonRow>
-                    <IonCol
-                      style={{ fontSize: "15px", color: "grey" }}
-                      className="ion-text-left  ion-no-padding"
-                    >
-                      {tags}
-                    </IonCol>
-                  </IonRow>
-                </IonGrid>
-                <IonIcon icon={chevronForwardOutline} size="small" style={{color: "grey",}} />
-              </IonButton>
-            );
-          })}
-        </div>
-      );
-    }
   };
 
   return (
@@ -138,7 +79,74 @@ const HomePage: React.FC = () => {
             placeholder="Čo za teba vybavíme?"
           />
         </form>
-        {renderFilteredData()}
+        {filteredData.length === 0 ? (
+          <IonCard>
+            <IonCardHeader>
+              <IonCardTitle>{searchingText}</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              Budeme pridávať daľšie služby, pokiaľ máte o takúto službu záujem,
+              rádi by sme sa vás spýtali na viac informací.
+            </IonCardContent>
+            <IonCardContent>Môžeme vás kontaktovať?</IonCardContent>
+            <IonButton className="call-button">Áno</IonButton>
+            <IonButton className="call-button">Nie</IonButton>
+          </IonCard>
+        ) : (
+          <div key={searchingText}>
+            {filteredData.map((oneFunction) => {
+              const { id, title, tags, price, tax } = oneFunction;
+
+              return (
+                <IonButton
+                  fill="clear"
+                  expand="block"
+                  key={id}
+                  className="ion-text-wrap border"
+                  onClick={() => goToDetailPage(id)}
+                >
+                  <IonGrid>
+                    <IonRow class="ion-justify-content-between">
+                      <IonCol
+                        className="ion-text-left ion-no-padding"
+                        style={{
+                          fontSize: "22px",
+                          color: "black",
+                          maxWidth: "225px",
+                        }}
+                        size="auto"
+                      >
+                        {title}
+                        <br />
+                      </IonCol>
+                      <IonCol
+                        className="ion-text-right ion-no-padding"
+                        style={{ fontSize: "15px" }}
+                      >
+                        {price}
+                        <br />
+                        {tax}
+                      </IonCol>
+                    </IonRow>
+                    <IonRow>
+                      <IonCol
+                        style={{ fontSize: "15px", color: "grey" }}
+                        className="ion-text-left  ion-no-padding"
+                      >
+                        {tags}
+                      </IonCol>
+                    </IonRow>
+                  </IonGrid>
+                  <IonIcon
+                    icon={chevronForwardOutline}
+                    size="small"
+                    style={{ color: "grey" }}
+                  />
+                </IonButton>
+              );
+            })}
+          </div>
+        )}
       </IonContent>
     </IonPage>
   );

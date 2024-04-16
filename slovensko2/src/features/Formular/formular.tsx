@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import FormularCard from "../_shared/formularCard";
+import FormularCardWInput from "../_shared/formularCardWInput";
 import axios from "axios";
 import {
   IonPage,
@@ -11,7 +13,6 @@ import {
   IonFooter,
   IonButton,
 } from "@ionic/react";
-import FormularCard from "../_shared/formularCard";
 
 const Formular = () => {
   const [companyName, setCompanyName] = useState("");
@@ -49,28 +50,22 @@ const Formular = () => {
       owner: owner,
       bussinessActivity: bussinessActivity,
     };
-    const apiUrl = "http://localhost:3000/_api/server";
+    const apiUrl = "http://localhost:8100/form.json";
 
     axios
       .post(apiUrl, data)
       .then((response) => {
         console.log("Údaje úspešne odoslané:", response.data);
-        fetchJsonData();
+        alert("Údaje úspešne odoslané");
+        setCompanyName("");
+        setEmail("");
+        setPhoneNumber("");
+        setOwner("");
+        setBussinessActivity([]);
       })
       .catch((error) => {
         console.error("Chyba pri odosielaní údajov:", error);
-      });
-  };
-
-  const fetchJsonData = () => {
-    axios
-      .get("/api/getData")
-      .then((response) => {
-        console.log("Obsah súboru steps.json:", response.data);
-        setJsonData(response.data);
-      })
-      .catch((error) => {
-        console.error("Chyba pri načítaní obsahu súboru steps.json:", error);
+        alert("Chyba pri odosielaní údajov");
       });
   };
 
@@ -92,7 +87,7 @@ const Formular = () => {
           placeholder="Zadajte názov firmy"
           value={companyName}
           handleInputChange={handleInputChange}
-          success= {false}
+          success={false}
         />
 
         <FormularCard
@@ -102,7 +97,7 @@ const Formular = () => {
           placeholder="Zadajte Email"
           value={email}
           handleInputChange={handleInputChange}
-          success= {false}
+          success={false}
         />
 
         <FormularCard
@@ -112,7 +107,7 @@ const Formular = () => {
           placeholder="Tel.číslo"
           value={phoneNumber}
           handleInputChange={handleInputChange}
-          success= {false}
+          success={false}
         />
 
         <FormularCard
@@ -122,7 +117,7 @@ const Formular = () => {
           placeholder="Meno"
           value={owner}
           handleInputChange={handleInputChange}
-          success= {false}
+          success={false}
         />
 
         <FormularCard
@@ -133,16 +128,24 @@ const Formular = () => {
           placeholder="Vyberte"
           value={bussinessActivity}
           handleInputChange={(e) => setBussinessActivity(e.detail.value)}
-          multiple={true}
-          success= {false}
+          success={false}
           selectOptions={[
             { value: "option1", text: "40.Počítačové služby" },
             { value: "option2", text: "27.Sprostretkovateľská činnosť" },
             { value: "option3", text: "28.Kúpa tovaru na účely predaja" },
             { value: "option4", text: "58.Prenájom, úschova a požičanie" },
             { value: "option5", text: "62.Mimoškolská vzdelávacia činnosť" },
-            { value: "option6",  text: "41.Služby v oblasti administratívnej správy",},
+            {
+              value: "option6",
+              text: "41.Služby v oblasti administratívnej správy",
+            },
           ]}
+        />
+
+        <FormularCardWInput
+          title="Budeme vás kontaktovať"
+          description="V momente keď budeme mať pre vás potrebné informácie sa s vami spojíme"
+          icon="chatbubbleOutline"
         />
       </IonContent>
 

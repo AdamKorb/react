@@ -1,5 +1,7 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { RouteComponentProps, Link } from "react-router-dom";
-import data from "../_shared/data";
+import { useHistory } from "react-router-dom";
 import {
   arrowDownOutline,
   basketOutline,
@@ -32,14 +34,48 @@ interface DetailPageProps
   }> {}
 
 const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
+  const [item, setItem] = useState<any>({});
   const itemId = parseInt(match.params.id);
-  const filteredItem = data.filter((item) => item.id === itemId)[0];
+  const history = useHistory();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8100/mock/data.json`
+        );
+        const filteredItem = response.data.find(
+          (item: any) => item.id === itemId
+        );
+        setItem(filteredItem);
+      } catch (error) {
+        console.error("Chyba pri načítaní dát:", error);
+      }
+    };
+    fetchData();
+
+    return () => {};
+  }, [itemId]);
+
+  const handleFormSubmit = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8100/create.json`, {
+        order_id: itemId,
+      });
+      if (response.status >= 200 && response.status < 300) {
+        history.push(`/formular/${itemId}`);
+      } else {
+        console.error("Chyba pri vytváraní objednávky:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Chyba pri vytváraní objednávky:", error);
+    }
+  };
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>{filteredItem.title}</IonTitle>
+          <IonTitle>{item.title}</IonTitle>
           <IonButtons slot="start">
             <IonBackButton defaultHref="Back"></IonBackButton>
           </IonButtons>
@@ -52,18 +88,18 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
             size="8"
             style={{ fontSize: "28px", maxWidth: "220px", padding: "20px" }}
           >
-            {filteredItem.title}
+            {item.title}
           </IonCol>
           <IonCol
             size="4"
             style={{ fontSize: "22px", maxWidth: "220px", padding: "20px" }}
             className="ion-text-right"
           >
-            {filteredItem.price} <br /> {filteredItem.tax}
+            {item.price} <br /> {item.tax}
           </IonCol>
         </IonRow>
         <IonCol style={{ fontSize: "15px", color: "grey", padding: "20px" }}>
-          {filteredItem.tags}
+          {item.tags}
         </IonCol>
 
         <IonLabel
@@ -84,7 +120,6 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
               alignItems: "center",
             }}
           >
-            
             <IonIcon icon={locationOutline} />
             <span style={{ flex: "1", textAlign: "center" }}>
               Výročná správa SRO
@@ -107,7 +142,6 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
               alignItems: "center",
             }}
           >
-            
             <IonIcon icon={locationOutline} />
             <span style={{ flex: "1", textAlign: "center" }}>
               Zmena sídla SRO
@@ -129,7 +163,6 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
               alignItems: "center",
             }}
           >
-            
             <IonIcon icon={locationOutline} />
             <span style={{ flex: "1", textAlign: "center" }}>
               Výročná správa SRO
@@ -141,20 +174,31 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
             />
           </IonButton>
         </IonList>
-
         <Link to="/formular" style={{ display: "block" }}>
-          <IonButton expand="block">
+          <IonButton onClick={handleFormSubmit} expand="block">
             <IonIcon slot="start" icon={basketOutline} size="small" />
             POKRAČOVAŤ NA FORMULÁR
           </IonButton>
         </Link>
 
-        <IonButton style={{ fontSize: "15px"}} fill="clear">Objednávka 1,</IonButton> 
-        <IonButton style={{ fontSize: "15px"}} fill="clear">Objednávka 2,</IonButton> 
-        <IonButton style={{ fontSize: "15px"}} fill="clear">Objednávka 3,</IonButton> 
-        <IonButton style={{ fontSize: "15px"}} fill="clear">Objednávka 4,</IonButton> 
-        <IonButton style={{ fontSize: "15px"}} fill="clear">Objednávka 5,</IonButton> 
-        <IonButton style={{ fontSize: "15px"}} fill="clear">Objednávka 6,</IonButton> 
+        <IonButton style={{ fontSize: "15px" }} fill="clear">
+          Objednávka 1,
+        </IonButton>
+        <IonButton style={{ fontSize: "15px" }} fill="clear">
+          Objednávka 2,
+        </IonButton>
+        <IonButton style={{ fontSize: "15px" }} fill="clear">
+          Objednávka 3,
+        </IonButton>
+        <IonButton style={{ fontSize: "15px" }} fill="clear">
+          Objednávka 4,
+        </IonButton>
+        <IonButton style={{ fontSize: "15px" }} fill="clear">
+          Objednávka 5,
+        </IonButton>
+        <IonButton style={{ fontSize: "15px" }} fill="clear">
+          Objednávka 6,
+        </IonButton>
 
         <Link to="/sample-formular" style={{ display: "block" }}>
           <IonButton expand="block">
@@ -168,11 +212,9 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
             <IonCardTitle>Čo budem potrebovať?</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            - názov firmy ktorý nie je použitý <br />
-            - sídlo firmy (trvalé
+            - názov firmy ktorý nie je použitý <br />- sídlo firmy (trvalé
             bydlisko alebo povolenie na inej adrese) <br />
-            - elektronicky podpísané splnomocnenie <br />
-            - vybrať si predmet
+            - elektronicky podpísané splnomocnenie <br />- vybrať si predmet
             podnikania
           </IonCardContent>
         </IonCard>
@@ -182,8 +224,7 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
             <IonCardTitle>Čo mám robiť ďalej?</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            - v banke si otvoriť firemný účet <br />
-            - nájsť si účtovníčku
+            - v banke si otvoriť firemný účet <br />- nájsť si účtovníčku
           </IonCardContent>
         </IonCard>
 
@@ -193,8 +234,7 @@ const DetailPage: React.FC<DetailPageProps> = ({ match }) => {
           </IonCardHeader>
           <IonCardContent>
             - máte založenú SRO <br />
-            - dostanete IČO <br />
-            - dostanete DIČ
+            - dostanete IČO <br />- dostanete DIČ
           </IonCardContent>
         </IonCard>
       </IonContent>
